@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Untuk Nyimas 🌸</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg1:#FFDDE6;
+    --bg2:#FFF0D9;
+    --bg3:#DFF7EE;
+    --overlay: rgba(0,0,0,0.42);
+    --accent: rgba(255,130,170,0.95);
+    --text: #ffffff;
+  }
+
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;margin:0}
+  body{
+    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg3));
+    background-size: 300% 300%;
+    animation: aurora 18s linear infinite;
+    color:var(--text);
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    position:relative;
+  }
+
+  /* dark overlay so text remains readable */
+  body::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.22), rgba(0,0,0,0.46));
+    z-index:0;
+    pointer-events:none;
+  }
+
+  @keyframes aurora {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  /* subtle bokeh / city lights */
+  .bokeh{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      radial-gradient(circle at 12% 25%, rgba(255,255,255,0.06) 0 8px, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.05) 0 10px, transparent 45%),
+      radial-gradient(circle at 55% 20%, rgba(255,240,255,0.04) 0 6px, transparent 35%);
+    filter: blur(10px) saturate(110%);
+    opacity:0.9;
+  }
+
+  /* star canvas */
+  #stars{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+
+  /* slide container */
+  .slide {
+    position:absolute; inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 6vw;
+    z-index:1;
+  }
+  .slide.active{ display:flex; animation: fadeIn 600ms ease both; }
+
+  @keyframes fadeIn{
+    from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none}
+  }
+
+  h1{
+    margin:0 0 10px 0;
+    font-weight:700;
+    line-height:1.02;
+    font-size:clamp(1.6rem,5.2vw,2.4rem);
+    text-shadow: 0 6px 18px rgba(0,0,0,0.55);
+  }
+
+  p{
+    margin:0 0 18px 0;
+    font-weight:400;
+    font-size:clamp(0.98rem,3.6vw,1.15rem);
+    max-width:900px;
+    line-height:1.6;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.45);
+    opacity:0.98;
+  }
+
+  /* button large and easy to tap on mobile */
+  .btn {
+    display:inline-flex; align-items:center; gap:.5rem;
+    padding:12px 26px;
+    border-radius:28px;
+    border:0;
+    cursor:pointer;
+    font-weight:700;
+    font-size:clamp(0.95rem,3.6vw,1.05rem);
+    color:var(--text);
+    background: linear-gradient(180deg, #ff9db7, #ff7da3);
+    box-shadow: 0 10px 26px rgba(255,120,170,0.16);
+    transition: transform .18s ease, box-shadow .18s ease;
+    -webkit-user-select:none; user-select:none;
+    touch-action: manipulation;
+  }
+  .btn:active{ transform: scale(.98); }
+  .btn:focus{ outline: 3px solid rgba(255,150,190,0.2); outline-offset:4px }
+
+  /* hearts (slide 4) */
+  .heart {
+    position:fixed;
+    bottom: -10vh;
+    pointer-events:none;
+    z-index:0;
+    transform-origin:center;
+    opacity:0.95;
+  }
+
+  @keyframes floatUp {
+    0%{ transform: translateY(0) scale(1); opacity:1; }
+    100%{ transform: translateY(-110vh) scale(1.6); opacity:0; }
+  }
+
+  /* small responsive tweaks */
+  @media (min-width:900px){
+    p{ font-size:1.05rem; }
+  }
+
+  /* ensure last slide's text stands out a bit more */
+  .slide.final h1{ letter-spacing:0.6px; transform-origin:center; animation: gentleBeat 2.6s ease-in-out infinite; }
+  @keyframes gentleBeat{
+    0%,100%{ transform: scale(1) }
+    45%{ transform: scale(1.04) }
+    60%{ transform: scale(1) }
+  }
+
+</style>
+</head>
+<body>
+  <div class="bokeh" aria-hidden="true"></div>
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <!-- Slides -->
+  <main role="main">
+    <section class="slide active" id="slide1" aria-labelledby="s1h">
+      <div>
+        <h1 id="s1h">Hai Nyimas~ 🌸</h1>
+        <p>Entah kenapa tiap lihat kamu, hati rasanya tenang aja gitu...</p>
+        <button class="btn" id="btn1">Lanjut 💞</button>
+      </div>
+    </section>
+
+    <section class="slide" id="slide2" aria-labelledby="s2h">
+      <div>
+        <h1 id="s2h">Kadang aku nggak perlu alasan buat senyum 😊</h1>
+        <p>Soalnya, sayang... cukup inget kamu aja udah bikin bahagia 💕</p>
+        <button class="btn" id="btn2">Lanjut lagi 💗</button>
+      </div>
+    </section>
+
+    <section class="slide" id="slide3" aria-labelledby="s3h">
+      <div>
+        <h1 id="s3h">Kamu itu kayak rumah 🏡</h1>
+        <p>Tempat paling nyaman buat pulang dan tenang 💖</p>
+        <button class="btn" id="btn3">Terakhir nih 💫</button>
+      </div>
+    </section>
+
+    <section class="slide final" id="slide4" aria-labelledby="s4h">
+      <div>
+        <h1 id="s4h">I love you, Nyimas~ 🥰</h1>
+        <p>Makasih udah bikin hariku sehangat pelukanmu 💗</p>
+        <!-- no navigation button on final by design (stops here) -->
+      </div>
+    </section>
+  </main>
+
+  <!-- audio (external mp3s from Pixabay - reliable CDN) -->
+  <audio id="bgm" loop preload="none">
+    <source src="https://cdn.pixabay.com/download/audio/2023/04/19/audio_0e1d3f7c1b.mp3?filename=romantic-guitar-loop-144190.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="mwah" preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2023/04/12/audio_d58b4e6ab3.mp3?filename=kiss-111473.mp3" type="audio/mpeg">
+  </audio>
+
+<script>
+/* ---------- starfield (gentle) ---------- */
+(function(){
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let w=0,h=0, stars=[];
+  function resize(){
+    w = canvas.width = innerWidth;
+    h = canvas.height = innerHeight;
+    init();
+  }
+  function init(){
+    stars = [];
+    const count = Math.max(40, Math.floor((w*h)/50000)); // density scaled
+    for(let i=0;i<count;i++){
+      stars.push({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: Math.random()*1.6,
+        a: Math.random()*0.9 + 0.05,
+        vx: (Math.random()-0.5)*0.02
+      });
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    for(const s of stars){
+      s.x += s.vx;
+      if(s.x > w) s.x = 0;
+      if(s.x < 0) s.x = w;
+      ctx.beginPath();
+      ctx.globalAlpha = s.a*0.9;
+      ctx.fillStyle = '#ffffff';
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+/* ---------- slide + audio logic ---------- */
+let current = 1;
+const total = 4;
+const slides = [];
+for(let i=1;i<=total;i++) slides[i] = document.getElementById('slide'+i);
+
+const bgm = document.getElementById('bgm');
+const mwah = document.getElementById('mwah');
+let musicStarted = false;
+let heartsStarted = false;
+let heartInterval = null;
+
+/* start music after *first* user click (but buttons always work immediately) */
+function ensureMusicStarted(){
+  if(musicStarted) return;
+  // try play; browsers require user gesture; our buttons provide that
+  bgm.play().catch(()=>{ /* ignored */ });
+  musicStarted = true;
+}
+
+/* play mwah sound safely */
+function playMwah(){
+  try{
+    mwah.currentTime = 0;
+    mwah.play().catch(()=>{});
+  }catch(e){}
+}
+
+/* navigate */
+function showSlide(n){
+  for(let i=1;i<=total;i++) slides[i].classList.remove('active');
+  slides[n].classList.add('active');
+  current = n;
+  if(current === total) startHearts();
+}
+
+/* attach buttons */
+document.getElementById('btn1').addEventListener('click', function(e){
+  ensureMusicStarted();
+  playMwah();
+  showSlide(2);
+});
+document.getElementById('btn2').addEventListener('click', function(e){
+  ensureMusicStarted();
+  playMwah();
+  showSlide(3);
+});
+document.getElementById('btn3').addEventListener('click', function(e){
+  ensureMusicStarted();
+  playMwah();
+  showSlide(4);
+});
+
+/* keyboard accessibility */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' || e.key === ' ') {
+    const active = document.querySelector('.slide.active');
+    // activate first button inside active slide if present
+    const btn = active && active.querySelector('button');
+    if(btn){ btn.click(); e.preventDefault(); }
+  }
+});
+
+/* ---------- hearts effect (slide 4) ---------- */
+function startHearts(){
+  if(heartsStarted) return;
+  heartsStarted = true;
+  heartInterval = setInterval(()=> {
+    const el = document.createElement('div');
+    el.className = 'heart';
+    el.textContent = ['💗','💞','💕'][Math.floor(Math.random()*3)];
+    // start horizontally between 8% and 92% of width, but biased towards center
+    const left = Math.random() * 84 + 8;
+    el.style.left = left + 'vw';
+    el.style.fontSize = (12 + Math.random()*26) + 'px';
+    el.style.opacity = (0.6 + Math.random()*0.45).toString();
+    el.style.animationDuration = (4 + Math.random()*5) + 's';
+    el.style.transform = `translateY(0) rotate(${(-15 + Math.random()*30).toFixed(1)}deg)`;
+    document.body.appendChild(el);
+    // trigger animation (floatUp keyframes)
+    el.style.animationName = 'floatUp';
+    // remove after safe time
+    setTimeout(()=> { try{ el.remove(); }catch(e){} }, 9500);
+  }, 280); // frequency of hearts
+}
+
+/* optional: stop hearts when leaving final (not needed as we don't navigate back) */
+/* but guard to prevent runaway intervals on reload */
+window.addEventListener('beforeunload', ()=> {
+  if(heartInterval) clearInterval(heartInterval);
+});
+
+/* popular mobile gesture: allow first tap anywhere to start audio too (without changing slide)
+   This helps if user taps background before pressing button */
+let firstTapDone = false;
+document.body.addEventListener('pointerdown', (e) => {
+  if(!firstTapDone){
+    firstTapDone = true;
+    // Only resume when user interacted
+    bgm.play().then(()=>{ bgm.pause(); bgm.currentTime = 0; musicStarted = false; }).catch(()=>{});
+  }
+}, { once: true });
+</script>
+</body>
+</html>
